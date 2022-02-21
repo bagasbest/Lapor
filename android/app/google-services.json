@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "438592420352",
+    "project_id": "lapor-fe122",
+    "storage_bucket": "lapor-fe122.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:438592420352:android:a6a680c950139eab6676e5",
+        "android_client_info": {
+          "package_name": "com.example.lapor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "438592420352-kjqsfeq9jpgnjbvej3mq5r2tms5ah394.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1YSdIYMm05mjIvq1J6LoT8g5IQcJo2b0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "438592420352-kjqsfeq9jpgnjbvej3mq5r2tms5ah394.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
