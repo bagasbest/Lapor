@@ -13,7 +13,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
@@ -21,7 +20,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _showPassword = false;
   bool _visible = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -60,15 +58,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
               key: _formKey,
               child: Column(
                 children: [
-
-                  Text('Data Pribadi', textAlign: TextAlign.start, style: TextStyle(fontWeight: FontWeight.w500),),
+                  Text(
+                    'Data Pribadi',
+                    textAlign: TextAlign.start,
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
                   const SizedBox(
                     height: 16,
                   ),
+
                   /// NOMOR HANDPHONE
                   Container(
                     margin: const EdgeInsets.only(top: 10, left: 16, right: 16),
-                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 1),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 30, vertical: 1),
                     decoration: BoxDecoration(
                       color: Colors.grey[200],
                       borderRadius: BorderRadius.circular(30),
@@ -94,7 +97,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   /// KOLOM NAMA
                   Container(
                     margin: const EdgeInsets.only(top: 10, left: 16, right: 16),
-                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 1),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 30, vertical: 1),
                     decoration: BoxDecoration(
                       color: Colors.grey[200],
                       borderRadius: BorderRadius.circular(30),
@@ -118,14 +122,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text('Email & Kata sandi',textAlign: TextAlign.start, style: TextStyle(fontWeight: FontWeight.w500),),
+                  Text(
+                    'Email & Kata sandi',
+                    textAlign: TextAlign.start,
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
                   const SizedBox(
                     height: 16,
                   ),
+
                   /// KOLOM EMAIL
                   Container(
                     margin: const EdgeInsets.only(top: 10, left: 16, right: 16),
-                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 1),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 30, vertical: 1),
                     decoration: BoxDecoration(
                       color: Colors.grey[200],
                       borderRadius: BorderRadius.circular(30),
@@ -153,7 +163,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   /// KOLOM PASSWORD
                   Container(
                     margin: const EdgeInsets.only(top: 10, left: 16, right: 16),
-                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 1),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 30, vertical: 1),
                     decoration: BoxDecoration(
                       color: Colors.grey[200],
                       borderRadius: BorderRadius.circular(30),
@@ -228,9 +239,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                               setState(() {
                                 _visible = false;
+                                _nameController.text = "";
+                                _phoneController.text = "";
+                                _emailController.text = "";
+                                _passwordController.text = "";
                               });
 
-                              _formKey.currentState!.reset();
                               _showSuccessRegistration();
                             } else {
                               setState(() {
@@ -246,8 +260,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   FlatButton(
                     onPressed: () {
-                      Route route =
-                      MaterialPageRoute(builder: (context) => const LoginScreen());
+                      Route route = MaterialPageRoute(
+                          builder: (context) => const LoginScreen());
                       Navigator.pushReplacement(context, route);
                     },
                     splashColor: Colors.grey[200],
@@ -288,6 +302,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         "name": _nameController.text,
         "email": _emailController.text,
         "phone": _phoneController.text,
+        "password": _passwordController.text,
         "role": 'user',
       });
     } catch (error) {

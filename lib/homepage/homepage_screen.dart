@@ -1,5 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lapor/homepage/data_user/data_user.dart';
+import 'package:lapor/homepage/pengaduan/pengaduan_screen.dart';
 import 'package:lapor/homepage/profile/profile_screen.dart';
+import 'package:lapor/homepage/settings/settings_screen.dart';
+
+import 'daftar_pengaduan/list_screen.dart';
 
 class HomepageScreen extends StatefulWidget {
   const HomepageScreen({Key? key}) : super(key: key);
@@ -9,6 +16,26 @@ class HomepageScreen extends StatefulWidget {
 }
 
 class _HomepageScreenState extends State<HomepageScreen> {
+  String role = "";
+
+  @override
+  void initState() {
+    super.initState();
+    getUserRole();
+  }
+
+  void getUserRole() async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .get()
+        .then((value) {
+      role = "" + value.get('role');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,30 +109,57 @@ class _HomepageScreenState extends State<HomepageScreen> {
                       left: 16,
                       right: 16,
                     ),
-                    child: Card(
-                      elevation: 10,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/pengaduan.png',
-                              width: 100,
-                              height: 100,
-                            ),
-                            SizedBox(
-                              height: 16,
-                            ),
-                            Text(
-                              'Pengaduan',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 18),
-                            )
-                          ],
+                    child: GestureDetector(
+                      onTap: () {
+                        if (role == "user") {
+                          Route route = MaterialPageRoute(
+                              builder: (context) => const PengaduanScreen());
+                          Navigator.push(context, route);
+                        } else {
+                          Route route = MaterialPageRoute(
+                              builder: (context) => const DataUserScreen());
+                          Navigator.push(context, route);
+                        }
+                      },
+                      child: Card(
+                        elevation: 10,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              (role == "user")
+                                  ? Image.asset(
+                                      'assets/pengaduan.png',
+                                      width: 100,
+                                      height: 100,
+                                    )
+                                  : Icon(
+                                      Icons.people,
+                                      color: Colors.orange,
+                                      size: 100,
+                                    ),
+                              SizedBox(
+                                height: 16,
+                              ),
+                              (role == "user")
+                                  ? Text(
+                                      'Data Pengguna',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 18),
+                                    )
+                                  : Text(
+                                      'Pengaduan',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 18),
+                                    ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -126,30 +180,39 @@ class _HomepageScreenState extends State<HomepageScreen> {
                       left: 16,
                       bottom: 16,
                     ),
-                    child: Card(
-                      elevation: 10,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/daftar_pengaduan.png',
-                              width: 100,
-                              height: 100,
-                            ),
-                            SizedBox(
-                              height: 16,
-                            ),
-                            Text(
-                              'Daftar Pengaduan',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 17,),
-                            )
-                          ],
+                    child: GestureDetector(
+                      onTap: () {
+                        Route route = MaterialPageRoute(
+                            builder: (context) => const PengaduanListScreen());
+                        Navigator.push(context, route);
+                      },
+                      child: Card(
+                        elevation: 10,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/daftar_pengaduan.png',
+                                width: 100,
+                                height: 100,
+                              ),
+                              SizedBox(
+                                height: 16,
+                              ),
+                              Text(
+                                'Daftar Pengaduan',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 17,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -164,32 +227,39 @@ class _HomepageScreenState extends State<HomepageScreen> {
                       bottom: 16,
                       right: 16,
                     ),
-                    child: Card(
-                      elevation: 10,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/settings.png',
-                              width: 100,
-                              height: 100,
-                            ),
-                            SizedBox(
-                              height: 16,
-                            ),
-                            Text(
-                              'Pengaturan',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18,
+                    child: GestureDetector(
+                      onTap: () {
+                        Route route = MaterialPageRoute(
+                            builder: (context) => const SettingsScreen());
+                        Navigator.push(context, route);
+                      },
+                      child: Card(
+                        elevation: 10,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/settings.png',
+                                width: 100,
+                                height: 100,
                               ),
-                            )
-                          ],
+                              SizedBox(
+                                height: 16,
+                              ),
+                              Text(
+                                'Pengaturan',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),

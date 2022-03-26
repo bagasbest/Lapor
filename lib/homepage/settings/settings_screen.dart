@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:lapor/auth/login_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -38,26 +39,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
           Container(
             width: MediaQuery.of(context).size.width,
             height: 60,
-            color: Color(0xfffbbb5b),
+            margin: EdgeInsets.all(16),
             child: ElevatedButton(
               onPressed: () async {
                 await FirebaseAuth.instance.signOut();
 
                 Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => const LoginScreen()),
-                        (Route<dynamic> route) => false);
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()),
+                    (Route<dynamic> route) => false);
               },
               style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Color(0xfffbbb5b)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                      )
-                  )
-              ),
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  )),
               child: Text(
                 'Logout',
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
+                  fontSize: 16,
                   color: Colors.white,
                 ),
               ),
