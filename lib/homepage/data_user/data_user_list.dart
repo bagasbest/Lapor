@@ -16,7 +16,7 @@ class DataUserList extends StatelessWidget {
         String uid = document[i]['uid'].toString();
         String name = document[i]['name'].toString();
         String email = document[i]['email'].toString();
-        String password = document[i]['name'].toString();
+        String password = document[i]['password'].toString();
         String phone = document[i]['phone'].toString();
 
         return GestureDetector(

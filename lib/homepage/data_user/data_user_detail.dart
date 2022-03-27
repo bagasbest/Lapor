@@ -129,7 +129,6 @@ class _DataUserDetailState extends State<DataUserDetail> {
               child: TextFormField(
                 controller: _email,
                 enabled: false,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
                 decoration: const InputDecoration(
                   hintText: 'Email',
                   border: InputBorder.none,
@@ -165,6 +164,9 @@ class _DataUserDetailState extends State<DataUserDetail> {
                       );
                       Navigator.push(context, route);
                     },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     color: Color(0xfffbbb5b),
                     child: Text(
                       'Ubah Password',
@@ -197,6 +199,9 @@ class _DataUserDetailState extends State<DataUserDetail> {
                         _visible = false;
                       });
                     },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     color: Colors.orange,
                     child: Text(
                       'Update Data',
