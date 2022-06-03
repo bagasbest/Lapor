@@ -24,6 +24,7 @@ class _PengaduanScreenState extends State<PengaduanScreen> {
   var _latitude;
   var _longitude;
   String name = "";
+  String locationStatus = '* Tentukan titik lokasi anda';
 
   final _formKey = GlobalKey<FormState>();
   bool isImageAdd = false;
@@ -225,6 +226,7 @@ class _PengaduanScreenState extends State<PengaduanScreen> {
                                   .substring(0, result.toString().indexOf('|'));
                               _longitude = result.toString().substring(
                                   result.toString().indexOf('|') + 1);
+                              locationStatus = '√ Lokasi telah terpilih';
                             });
                           },
                           child: Image.asset(
@@ -236,10 +238,19 @@ class _PengaduanScreenState extends State<PengaduanScreen> {
                         SizedBox(
                           height: 10,
                         ),
-                        Text(
-                          'Tentukan titik lokasi anda',
-                          style: TextStyle(fontWeight: FontWeight.w500),
-                        ),
+                        (locationStatus == "* Tentukan titik lokasi anda")
+                            ? Text(
+                                locationStatus,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black),
+                              )
+                            : Text(
+                                locationStatus,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.green[700]),
+                              ),
                       ],
                     ),
                   ),
@@ -334,10 +345,8 @@ class _PengaduanScreenState extends State<PengaduanScreen> {
   void getName() {
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(uid)
-        .get()
-        .then((value) {name = "" + value.get('name');});
+    FirebaseFirestore.instance.collection('users').doc(uid).get().then((value) {
+      name = "" + value.get('name');
+    });
   }
 }
