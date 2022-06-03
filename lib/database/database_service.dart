@@ -35,7 +35,7 @@ class DatabaseService {
   }
 
   static void uploadReport(String title, String pengaduan, String address,
-      latitude, longitude, String image, String name) {
+      latitude, longitude, String image, String name, String userId) {
     try {
       var timeInMillis = DateTime.now().millisecondsSinceEpoch;
       FirebaseFirestore.instance
@@ -51,6 +51,7 @@ class DatabaseService {
         'image': image,
         'status': 'Belum Ditanggapi',
         'name': name,
+        'userId': userId,
       });
       toast('Berhasil menambahkan laporan baru');
     } catch (error) {

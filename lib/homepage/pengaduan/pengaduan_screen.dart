@@ -288,6 +288,7 @@ class _PengaduanScreenState extends State<PengaduanScreen> {
                             ? await DatabaseService.uploadImageReport(_image!)
                             : null;
 
+                        String userId = FirebaseAuth.instance.currentUser!.uid;
                         DatabaseService.uploadReport(
                           _title.text,
                           _pengaduan.text,
@@ -296,6 +297,7 @@ class _PengaduanScreenState extends State<PengaduanScreen> {
                           _longitude,
                           (url != null) ? url : '',
                           name,
+                          userId,
                         );
 
                         setState(() {

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lapor/homepage/profile/profile_change_password_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -13,6 +14,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   var _name = TextEditingController();
   var _email = TextEditingController();
   var _phone = TextEditingController();
+  String _password = "";
 
   @override
   void initState() {
@@ -31,6 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       _name.text = data!['name'];
       _email.text = data['email'];
       _phone.text = data['phone'];
+      _password = data['password'];
     }
     setState(() {});
   }
@@ -130,6 +133,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
           ),
+          SizedBox(
+            height: 16,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(
+              left: 16,
+              right: 16,
+            ),
+            child: ElevatedButton(
+              child: Text(
+                'Ubah Kata Sandi',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xfffbbb5b),
+                elevation: 10.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onPressed: () {
+                Route route = MaterialPageRoute(
+                  builder: (context) => ProfileChangePasswordScreen(
+                      email: _email.text, password: _password),
+                );
+                Navigator.push(context, route);
+              },
+            ),
+          )
         ],
       ),
     );

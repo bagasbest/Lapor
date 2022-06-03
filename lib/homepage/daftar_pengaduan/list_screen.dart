@@ -16,10 +16,11 @@ class _PengaduanListScreenState extends State<PengaduanListScreen> {
   var _selectedStatus;
   String title = "Daftar Pengaduan";
   String role = "";
+  var uid = "";
   bool _isLoading = true;
 
   _checkRole() {
-    var uid = FirebaseAuth.instance.currentUser?.uid;
+    uid = FirebaseAuth.instance.currentUser!.uid;
 
     FirebaseFirestore.instance.collection('users').doc(uid).get().then((value) {
       role = "" + value.get('role');
@@ -28,7 +29,7 @@ class _PengaduanListScreenState extends State<PengaduanListScreen> {
           title = "Daftar Pengaduan Diterima";
           _isLoading = false;
         });
-      } else{
+      } else {
         setState(() {
           title = "Daftar Pengaduan Anda";
           _isLoading = false;
@@ -70,7 +71,6 @@ class _PengaduanListScreenState extends State<PengaduanListScreen> {
             ),
             body: Stack(
               children: [
-
                 Container(
                   margin: EdgeInsets.only(top: 16, left: 16, right: 16),
                   width: MediaQuery.of(context).size.width,
@@ -101,28 +101,54 @@ class _PengaduanListScreenState extends State<PengaduanListScreen> {
                     }).toList(),
                   ),
                 ),
-
                 Container(
                   margin: EdgeInsets.only(left: 16, right: 16, top: 60),
                   child: StreamBuilder(
-                    stream: (_selectedStatus == "Semua" || _selectedStatus == null)
-                        ? FirebaseFirestore.instance
-                            .collection('report')
-                            .snapshots()
-                        : (_selectedStatus == 'Belum Ditanggapi')
+                    stream: (role == "admin")
+                        ? (_selectedStatus == "Semua" ||
+                                _selectedStatus == null)
                             ? FirebaseFirestore.instance
                                 .collection('report')
-                                .where('status', isEqualTo: 'Belum Ditanggapi')
                                 .snapshots()
-                            : (_selectedStatus == "Diproses")
+                            : (_selectedStatus == 'Belum Ditanggapi')
                                 ? FirebaseFirestore.instance
                                     .collection('report')
-                                    .where('status', isEqualTo: 'Diproses')
+                                    .where('status',
+                                        isEqualTo: 'Belum Ditanggapi')
                                     .snapshots()
-                                : FirebaseFirestore.instance
+                                : (_selectedStatus == "Diproses")
+                                    ? FirebaseFirestore.instance
+                                        .collection('report')
+                                        .where('status', isEqualTo: 'Diproses')
+                                        .snapshots()
+                                    : FirebaseFirestore.instance
+                                        .collection('report')
+                                        .where('status', isEqualTo: 'Selesai')
+                                        .snapshots()
+                        : (_selectedStatus == "Semua" ||
+                                _selectedStatus == null)
+                            ? FirebaseFirestore.instance
+                                .collection('report')
+                                .where("userId", isEqualTo: uid)
+                                .snapshots()
+                            : (_selectedStatus == 'Belum Ditanggapi')
+                                ? FirebaseFirestore.instance
                                     .collection('report')
-                                    .where('status', isEqualTo: 'Selesai')
-                                    .snapshots(),
+                                    .where("userId", isEqualTo: uid)
+                                    .where('status',
+                                        isEqualTo: 'Belum Ditanggapi')
+                                    .snapshots()
+                                : (_selectedStatus == "Diproses")
+                                    ? FirebaseFirestore.instance
+                                        .collection('report')
+                                        .where("userId", isEqualTo: uid)
+                                        .where('status', isEqualTo: 'Diproses')
+                                        .snapshots()
+                                    : FirebaseFirestore.instance
+                                        .collection('report')
+                                        .where("userId", isEqualTo: uid)
+                                        .where('status', isEqualTo: 'Selesai')
+                                        .snapshots(),
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasData) {
@@ -141,6 +167,7 @@ class _PengaduanListScreenState extends State<PengaduanListScreen> {
             ),
           );
   }
+
   Widget _emptyData() {
     return Container(
       child: Center(
